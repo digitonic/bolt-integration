@@ -34,7 +34,7 @@ class BoltClient
     private function sendTenancyRequest(array $tenancy): void
     {
         try {
-            $this->client->post('/tenancies', ['json' => $tenancy]);
+            $this->client->post('tenancies', ['json' => $tenancy]);
         } catch (ClientException $e) {
             Log::error($e->getMessage());
         }

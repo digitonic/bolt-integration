@@ -25,9 +25,9 @@
         }
     },
     "require": {
-        "illuminate/support": "6.0.*",
+        "illuminate/support": "5.8.*|6.*",
         "guzzlehttp/guzzle": "6.5.*",
-        "illuminate/database": "6.0.*"
+        "illuminate/database": "5.8.*|6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4"

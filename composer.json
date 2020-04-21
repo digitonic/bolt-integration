@@ -25,10 +25,10 @@
         }
     },
     "require": {
-        "illuminate/support": "5.8.*|6.*",
-        "illuminate/queue": "5.8.*|6.0.*",
+        "illuminate/support": "*",
+        "illuminate/queue": "*",
         "guzzlehttp/guzzle": "6.*",
-        "illuminate/database": "5.8.*|6.*"
+        "illuminate/database": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4"

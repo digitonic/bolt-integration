@@ -17,7 +17,7 @@ class BoltServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    __DIR__ . '/../config/config.php' => App::configPath('digitonic.bolt'),
+                    __DIR__ . '/../config/config.php' => App::configPath('digitonic/bolt.php'),
                 ],
                 'config'
             );

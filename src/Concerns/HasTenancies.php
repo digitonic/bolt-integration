@@ -12,32 +12,31 @@ trait HasTenancies
     /**
      * @return array
      */
-    public function getContactsFromCentralisedOptouter(): array
+    public function getPhoneNumbersFromCentralisedOptouter(): array
     {
-        $phoneNumbers = new Collection();
-        $tables = $this->getTablesFromCentralisedOptouter();
-
-        foreach ($tables as $table) {
-            $phoneNumbers->push($this->getPhoneNumbersFromCentralisedOptouter($table));
-        }
-
-        return $phoneNumbers->flatten()->toArray();
+        return $this->getContactsFromCentralisedOptouter(['mobile'])->pluck('mobile')->toArray();
     }
 
     /**
-     * @param string $table
-     * @return array
+     * @return Collection
      */
-    public function getPhoneNumbersFromCentralisedOptouter(string $table): array
+    public function getContactsFromCentralisedOptouter(array $columns = ['*']): Collection
     {
         try {
-            return DB::connection('bolt')->table($table)->pluck('mobile')->toArray();
+            $result = new Collection();
+            foreach($this->getTablesFromCentralisedOptouter() as $table) {
+                $result = $result->merge(DB::connection('bolt')->table($table)->get($columns));
+            }
+
+            return $result;
         } catch (QueryException $e) {
             Log::error($e->getMessage());
         }
 
-        return [];
+        return collect([]);
     }
+
+
 
     /**
      * @return array
@@ -52,7 +51,9 @@ trait HasTenancies
         if (!empty($keywords) && !empty($senders)) {
             foreach ($keywords as $keyword) {
                 foreach ($senders as $sender) {
-                    $tables[] = $brandCode . '_' . $keyword . '_' . $sender;
+                    if (is_numeric($sender)){
+                        $tables[] = $brandCode . '_' . $keyword . '_' . $sender;
+                    }
                 }
             }
         }

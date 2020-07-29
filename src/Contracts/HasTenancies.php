@@ -2,6 +2,8 @@
 
 namespace Digitonic\Bolt\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface HasTenancies
 {
     public function boltBrandName(): string;
@@ -12,9 +14,9 @@ interface HasTenancies
 
     public function boltSenders(): array;
 
-    public function getContactsFromCentralisedOptouter(): array;
+    public function getPhoneNumbersFromCentralisedOptouter(): array;
 
-    public function getPhoneNumbersFromCentralisedOptouter(string $table): array;
+    public function getContactsFromCentralisedOptouter(array $columns = ['*']): Collection;
 
     public function getTablesFromCentralisedOptouter(): array;
 }

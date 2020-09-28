@@ -23,20 +23,29 @@ trait HasTenancies
     public function getContactsFromCentralisedOptouter(array $columns = ['*']): Collection
     {
         try {
-            $result = new Collection();
+            $query = null;
             foreach($this->getTablesFromCentralisedOptouter() as $table) {
-                $result = $result->merge(DB::connection('bolt')->table($table)->get($columns));
+                if (!$query) {
+                    $query = DB::connection('bolt')->table($table)->select($columns);
+                    continue;
+                }
+
+                $query = $query->union(
+                    DB::connection('bolt')->table($table)->select($columns)
+                );
             }
 
-            return $result;
+            if (!$query) {
+                return new Collection([]);
+            }
+
+            return $query->get();
         } catch (QueryException $e) {
             Log::error($e->getMessage());
         }
 
         return collect([]);
     }
-
-
 
     /**
      * @return array

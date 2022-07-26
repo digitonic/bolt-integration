@@ -27,7 +27,7 @@
     "require": {
         "illuminate/support": "*",
         "illuminate/queue": "*",
-        "guzzlehttp/guzzle": "6.*",
+        "guzzlehttp/guzzle": "7.*",
         "illuminate/database": "*"
     },
     "require-dev": {
